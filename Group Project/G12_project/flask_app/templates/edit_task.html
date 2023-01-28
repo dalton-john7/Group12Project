@@ -1,0 +1,17 @@
+<nav class="nav justify-content-end">
+    <a href="/" class="nav-item nav-link">Welcome, {{user.firstname}} {{user.lastname}}</a>
+    <a href="/logout" class="nav-item nav-link">Logout</a>
+</nav>
+
+<h1>Edit Task</h1>
+<form action="/task/{{task.id}}" method="post">
+    <div class="row align-items-center g-3">
+        <div class="col-auto">
+            <label class="visually-hidden" for="inputEmail">Task Name</label>
+            <input type="text" class="form-control" id="tip" placeholder="task.tip">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Submit Changes</button>
+        </div>
+    </div>
+</form>

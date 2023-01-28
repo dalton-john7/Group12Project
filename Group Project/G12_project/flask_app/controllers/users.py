@@ -37,9 +37,9 @@ def logout():
 
 
 
-
-@app.route('/user/update',methods=["POST"])
-def update():
-    User.update(request.form)
-    return redirect("/tasks/home")
+# commented out unless we decide to implement this
+# @app.route('/user/update',methods=["POST"])
+# def update():
+#     User.update(request.form)
+#     return redirect("/tasks/home")
 
