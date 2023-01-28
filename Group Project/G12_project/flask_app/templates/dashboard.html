@@ -10,4 +10,38 @@
 </head>
 <body>
     
+    <nav class="nav justify-content-end">
+        <a href="/" class="nav-item nav-link">Welcome, {{user.firstname}} {{user.lastname}}</a>
+        <a href="/logout" class="nav-item nav-link">Logout</a>
+    </nav>
+
+    <h4>All Tasks</h4>
+
+<table>
+    <thead> 
+        <tr>
+            <th>Task</th>
+            <th>Task Creator</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in task: %}
+            <tr>
+                <td>{{task.name}}</td>
+                <td>{{task.user.firstname}} {{task.user.lastname}}</td>
+                <td>
+                    <a href="/task/{{task.id}}">Go To Task</a>
+                    {% if task.user.id == user.id %}
+                    <a href="/task/edit/{{task.id}}">Edit</a>
+                    <a href="/task/delete/{{task.id}}">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
 </body>
