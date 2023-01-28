@@ -3,7 +3,8 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_bcrypt import Bcrypt
 import re
-from .task import Task
+from flask_app.models import task,comment
+
 
 bcrypt = Bcrypt(app)
 
@@ -17,7 +18,7 @@ class User:
 
     def __init__(self,user):
         self.id = user["id"]
-        self.id = user["username"]
+        self.username = user["username"]
         self.firstname = user["firstname"]
         self.lastname = user["lastname"]
         self.email = user["email"]
