@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import users,tasks
+from flask_app.controllers import users,tasks,comments
 
 
 if __name__ =="__main__":
