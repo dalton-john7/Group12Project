@@ -19,7 +19,6 @@ def tasks_home():
 def task_detail(task_id):
     user = User.get_by_id(session["user_id"])
     task = Task.get_by_id(task_id)
-    # need a way to retrieve all comments
     return render_template("task_detail.html", user=user, task=task)
 
 
