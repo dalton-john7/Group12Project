@@ -26,17 +26,29 @@
         <tbody>
             {% for task in task: %}
                 <tr>
+                    <!-- not sure if these rows are going to pull the data, the multiple one to manys is making me scratch my head -->
                     <td>{{task.comment.tip}}</td>
-                    <td>{{task.user.firstname}} {{task.user.lastname}}</td>
-                    <td>
-                        <a href="/task/{{task.id}}">Go To Task</a>
-                        {% if task.user.id == user.id %}
-                        <a href="/task/edit/{{task.id}}">Edit</a>
-                        <a href="/task/delete/{{task.id}}">Delete</a>
+                    <td>{{task.comment.user.firstname}} {{task.comment.user.lastname}}</td>
+                    <!-- <td>
+                        {% if task.comment.user.id == user.id %}
+                        <a href="/comment/delete/{{comment.id}}">Delete</a>
                         {% endif %}
-                    </td>
+                    </td> -->
+                    <!-- ***************uncomment after delete method is implemented -->
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <h3>Add a Comment</h3>
+    <form action="/comment/{{task.id}}">
+        <div class="row align-items-center g-3">
+            <div class="col-auto">
+                <label class="visually-hidden" for="inputEmail">Comment</label>
+                <input type="text" class="form-control" id="tip" placeholder="Comment">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </div>
+        </div>
+    </form>
 </body>
