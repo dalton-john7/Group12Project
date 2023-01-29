@@ -24,7 +24,8 @@ def task_detail(task_id):
 
 @app.route("/task/create")
 def task_create_page():
-    return render_template("create_task.html")
+    user = User.get_by_id(session["user_id"])
+    return render_template("create_task.html", user=user)
 
 
 @app.route("/task/edit/<int:task_id>")
