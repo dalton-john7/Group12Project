@@ -9,11 +9,14 @@
     
 </head>
 <body>
-    <nav class="nav justify-content-end">
-        <a href="/" class="nav-item nav-link">Welcome, {{user.firstname}} {{user.lastname}}</a>
-        <a href="/logout" class="nav-item nav-link">Logout</a>
-    </nav>
-    <h3>{{task.name}}</h3>
+        <div>
+            
+            <button style="margin: 10px;"  type="button" class="btn btn-primary"><a href="/task/create" style="color:#ffffff;">Add Task</a></button>
+            <button style="margin: 10px;"  type="button" class="btn btn-primary"><a href="/tasks/home" style="color:#ffffff;">Dashboard</a></button>
+            <button style="margin: 10px;"  type="button" class="btn btn-primary"><a href="/logout" style="color:#ffffff;">Log Out</a></button>
+        </div>
+        <h1 class="w-75 p-3">{{task.taskname}}</h1>
+
     <p>Comments</p>
     <table>
         <thead> 
