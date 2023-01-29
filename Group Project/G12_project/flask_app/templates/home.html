@@ -9,5 +9,21 @@
     
 </head>
 <body>
-    <p>hello</p>
+    <div class="w-75 p-3">
+        <h1>Welcome,  {{user.username}}</h1>
+    </div>
+    <div>
+        <button style="margin-left: 10px;" type="button" class="btn btn-primary"><a href="/task/create" style="color:#ffffff;">Add Task</a></button>
+        <button style="margin-left: 10px;" type="button" class="btn btn-primary"><a href="/logout" style="color:#ffffff;">Log Out</a></button>
+    </div>
+
+
+
+    {% for task in task: %}
+    <p>{{task.taskname}} added by {{task.user.username}}</p>
+    {% if task.user.id == user.id %}
+    <a href="/task/edit/{{task.id}}">Edit</a>
+    <a href="/task/delete/{{task.id}}">Delete</a>
+    {% endif %}
+    {% endfor %}
 </body>

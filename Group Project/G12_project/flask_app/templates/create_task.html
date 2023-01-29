@@ -1,17 +1,52 @@
-<nav class="nav justify-content-end">
-    <a href="/" class="nav-item nav-link">Welcome, {{user.firstname}} {{user.lastname}}</a>
-    <a href="/logout" class="nav-item nav-link">Logout</a>
-</nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Item</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-<h1>Create Task</h1>
-<form action="/tasks" method="post">
-    <div class="row align-items-center g-3">
-        <div class="col-auto">
-            <label class="visually-hidden" for="inputEmail">Task Name</label>
-            <input type="text" class="form-control" id="tip" placeholder="Task Name">
+</head>
+<body>
+    <div class="w-75 p-3">
+        <h1 >Create Task</h1>
+        <button style="margin-left: 5px;" type="button" class="btn btn-primary"><a href="/tasks/home" style="color:#ffffff;">Dashboard</a></button>
+        <button style="margin-left: 5px;" type="button" class="btn btn-primary"><a href="/logout" style="color:#ffffff;">Log Out</a></button>
+
+        <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <p>{{message}}</p> 
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
         </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary">Submit Task</button>
-        </div>
+
+
+        <form action="/tasks", method="post">
+        
+
+            <div class="input-group mb-3">
+                <span  class="input-group-text" id="inputGroup-sizing-default">Task</span>
+                <input type="text" name="taskname" id="taskname" class="form-control" aria-label="taskname" aria-describedby="inputGroup-sizing-default">
+            </div>
+    
+    
+    
+    
+            <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                    <div>
+                        
+                        <button style="margin-left: 5px;" value="Submit" type="submit" class="btn btn-primary">Submit</button>
+    
+    
+                    </div>
+    
+        </form>
+
+
     </div>
-</form>
+</body>
+</html>

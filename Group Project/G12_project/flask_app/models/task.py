@@ -2,60 +2,98 @@ from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_bcrypt import Bcrypt
-from flask_app.models import user,comment
+from flask_app.models import user
+
 import re
 
 bcrypt = Bcrypt(app)
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 DB = "taskmanager"
-
 class Task:
-    def __init__( self , data ):
-        self.id = data['id']
-        self.name = data['name']
-        self.created_at = data['created_at']
-        self.updated_at = data['updated_at']
-        self.comments = []
+
+    def __init__(self, task):
+        self.id = task["id"]
+        self.taskname = task["taskname"]
+        self.created_at = task["created_at"]
+        self.updated_at = task["updated_at"]
+        self.user = None
+
+
+    @classmethod
+    def create_valid_task(cls, task_dict):
+        if not cls.is_valid(task_dict):
+            return False
+        
+        query = "INSERT INTO tasks (taskname,user_id) VALUES(%(taskname)s,%(user_id)s);"
+        task_id = connectToMySQL(DB).query_db(query, task_dict)
+        task = cls.get_by_id(task_id)
+        return task
+
+    @classmethod
+    def get_by_id(cls,task_id):
+        data = {
+            "id": task_id
+        }
+        query = "SELECT * FROM tasks WHERE id = %(id)s;"
+        result = connectToMySQL(DB).query_db(query,data)[0]
+        task = cls(result)
+        user_obj = user.User.get_by_id(result["user_id"])
+        task.user = user_obj
+        return task
+
+    @classmethod
+    def delete_task_by_id(cls, task_id):
+        data = {
+            "id": task_id
+        }
+        query = "DELETE FROM tasks WHERE ID = %(id)s;"
+        connectToMySQL(DB).query_db(query, data)
+        return task_id
+
+    @classmethod
+    def updated_task(cls, task_dict, session_id):
+        task = cls.get_by_id(task_dict["id"])
+        if task.user.id != session_id:
+            flash("You cannot update this.")
+            return False
+
+        if not cls.is_valid(task_dict):
+            return False
+        
+        query = "UPDATE tasks SET taskname = %(taskname)s WHERE id = %(id)s;"
+        result = connectToMySQL(DB).query_db(query,task_dict)
+        task = cls.get_by_id(task_dict["id"])
+        return task
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM tasks;"
-        results = connectToMySQL(DB).query_db(query)
+        query = "SELECT * FROM tasks JOIN users ON tasks.user_id=users.id"
+        task_data = connectToMySQL(DB).query_db(query)
+        print(task_data)
         tasks = []
+        for task in task_data:
+            task_obj = cls(task)
+            task_obj.user= user.User(
+                {
+                    "id":task["user_id"],
+                    "username": task["username"],
+                    "firstname": task["firstname"],
+                    "lastname": task["lastname"],
+                    "email": task["email"],
+                    "password": task["password"],
+                    "created_at": task["users.created_at"],
+                    "updated_at": task["users.updated_at"]
+                }
+            )
+            tasks.append(task_obj)
+        return tasks
 
-        for task in results:
-            tasks.append(cls(task))
-            return tasks
+    @staticmethod
+    def is_valid(task_dict):
+        valid = True
+        if len(task_dict["taskname"]) < 3:
+            valid = False
+            flash("Task Name must be atleast 3 characters!")
 
-    @classmethod
-    def get_one_task_with_comments(cls,data):
-        query = "SELECT * FROM tasks LEFT JOIN comments on tasks.id = comments.task_id WHERE tasks.id = %(id)s;"
-
-        results = connectToMySQL(DB).query_db(query,data)
-        task = cls(results[0])
-        for row in results:
-            n = {
-                'id': row['comments.id'],
-                'tip': row['tip'],
-                'created_at': row['comments.created_at'],
-                'updated_at': row['comments.updated_at']
-            }
-            task.comments.append(Comment(n))
-        return task
-
-
-    @classmethod
-    def save(cls, data):
-        query = "INSERT INTO tasks (name, created_at, updated_at ) VALUES(%(name)s,NOW(),NOW());"
-        return connectToMySQL(DB).query_db(query,data)
-
-    @classmethod
-    def edit_task(cls,data):
-        query = "UPDATE tasks SET name = %(name), updated_at=NOW() WHERE id = %(id)s;"
-        return connectToMySQL(DB).query_db(query,data)
-
-    @classmethod
-    def delete_task(cls,data):
-        query = "DELETE FROM tasks WHERE id = %(id)s"
-        return connectToMySQL(DB).query_db(query,data)
+        return valid
