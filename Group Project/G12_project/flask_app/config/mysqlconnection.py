@@ -9,7 +9,7 @@ class MySQLConnection:
                                     # UPDATE USERNAME AND PASSWORD
                     # ************************************************************
                                     user = 'root', 
-                                    password = 'Anthony13360', 
+                                    password = 'root', 
                                     db = db,
                                     charset = 'utf8mb4',
                                     cursorclass = pymysql.cursors.DictCursor,
