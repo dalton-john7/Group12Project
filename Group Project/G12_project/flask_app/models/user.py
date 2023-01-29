@@ -3,21 +3,21 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_bcrypt import Bcrypt
 import re
-from .task import Task
+
 
 bcrypt = Bcrypt(app)
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 
-#NEED TO ADD NEW DB NAME TO DB=""
+
 DB = "taskmanager"
 
 class User:
 
     def __init__(self,user):
         self.id = user["id"]
-        self.id = user["username"]
+        self.username = user["username"]
         self.firstname = user["firstname"]
         self.lastname = user["lastname"]
         self.email = user["email"]

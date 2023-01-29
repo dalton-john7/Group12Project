@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+</head>
+<body>
+    <div class="w-75 p-3">
+        <h1>Welcome,  {{user.username}}</h1>
+    </div>
+    <div>
+        <button style="margin-left: 10px;" type="button" class="btn btn-primary"><a href="/task/create" style="color:#ffffff;">Add Task</a></button>
+        <button style="margin-left: 10px;" type="button" class="btn btn-primary"><a href="/logout" style="color:#ffffff;">Log Out</a></button>
+    </div>
+
+
+
+    {% for task in task: %}
+    <p>{{task.taskname}} added by {{task.user.username}}</p>
+    {% if task.user.id == user.id %}
+    <a href="/task/edit/{{task.id}}">Edit</a>
+    <a href="/task/delete/{{task.id}}">Delete</a>
+    {% endif %}
+    {% endfor %}
+</body>
