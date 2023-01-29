@@ -30,8 +30,9 @@ def task_create_page():
 
 @app.route("/task/edit/<int:task_id>")
 def task_edit_page(task_id):
+    user = User.get_by_id(session["user_id"])
     task = Task.get_by_id(task_id)
-    return render_template("edit_task.html", task=task)
+    return render_template("edit_task.html", task=task, user=user)
 
 
 @app.route("/tasks", methods=["POST"])
