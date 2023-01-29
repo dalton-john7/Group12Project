@@ -35,3 +35,4 @@ class Comment:
         query = "INSERT INTO comments (tip, task_id) VALUES(%(tip)s,%(task_id)s;"
         return connectToMySQL(DB).query_db(query,data)
 
+# need delete method

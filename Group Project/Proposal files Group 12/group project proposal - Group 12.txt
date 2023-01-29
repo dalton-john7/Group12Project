@@ -1,0 +1,28 @@
+Task Share App
+
+
+Group Members
+
+John Dalton -Views, BoilerPlate code
+Elvin Ramirez -Backend Models
+Anthony Azana - Frontend Controllers
+Tiffany Wolfington - TBD
+Christian Pierre -TBD
+
+
+GitHub Repo Link - https://github.com/dalton-john7/RecipeShareApp_Group12
+
+-Users can upload tasks for other users to see. Creator of the tasks can edit them. 
+-All users can add comments/ tips to tasks
+
+- Freatures
+  	- Log/Reg
+	-Dashboard 
+		-shows all tasks, on click leads to task page with comment functionality 
+			-will have edit/delete functionality for creator
+			-list who created the task
+		-logout button
+	-Task view page
+		-section for comments, comments show who added them
+		-creator has edit/delete button
+	
