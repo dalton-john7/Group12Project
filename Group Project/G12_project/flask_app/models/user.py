@@ -10,7 +10,7 @@ bcrypt = Bcrypt(app)
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 
-#NEED TO ADD NEW DB NAME TO DB=""
+
 DB = "taskmanager"
 
 class User:
