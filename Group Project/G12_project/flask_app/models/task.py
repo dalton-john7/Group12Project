@@ -2,6 +2,7 @@ from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_bcrypt import Bcrypt
+from flask_app.models import comment
 from flask_app.models import user
 
 import re
@@ -18,6 +19,7 @@ class Task:
         self.created_at = task["created_at"]
         self.updated_at = task["updated_at"]
         self.user = None
+        self.comments= []
 
 
     @classmethod

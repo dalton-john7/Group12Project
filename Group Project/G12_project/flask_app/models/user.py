@@ -25,6 +25,7 @@ class User:
         self.created_at = user["created_at"]
         self.updated_at = user["created_at"]
         self.tasks = []
+        self.comments=[]
 
     @classmethod
     def get_by_email(cls,email):

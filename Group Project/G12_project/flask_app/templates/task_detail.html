@@ -27,14 +27,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for tasks in tasks: %}
+            {% for comments in comments: %}
                 <tr>
-                    <!-- not sure if these rows are going to pull the data, the multiple one to manys is making me scratch my head -->
-                    <td>{{task.comment.tip}}</td>
-                    <td>{{task.comment.user.firstname}} {{task.comment.user.lastname}}</td>
+                    <!-- still need to worko on this part, not pulling all coments yet -->
+                    <td>{{task.comments.tip}}</td>
+                    <td>{{task.comments.user_id}}</td>
+                    <td>delete button pending</td>
                     <!-- <td>
-                        {% if task.comment.user.id == user.id %}
-                        <a href="/comment/delete/{{comment.id}}">Delete</a>
+                    Need to remove this block temporarily to avvoid error- list object has no user attribute**
+                        {% if task.comments.user.id == user.id %}
+                        <a href="/comment/delete/{{comments.id}}">Delete</a>
                         {% endif %}
                     </td> -->
                     <!-- ***************uncomment after delete method is implemented -->
@@ -43,11 +45,13 @@
         </tbody>
     </table>
     <h3>Add a Comment</h3>
-    <form action="/comment/{{task.id}}">
+    <form action="/comment/{{task.id}}", method="post">
         <div class="row align-items-center g-3">
             <div class="col-auto">
                 <label class="visually-hidden" for="inputEmail">Comment</label>
-                <input type="text" class="form-control" id="tip" placeholder="Comment">
+                <input type="text" class="form-control" name="tip" value="{{task.comments.tip}}" id="tip"  placeholder="Comment">
+                <input type="hidden" name="user_id" value="{{session['user_id']}}">
+                <input type="hidden" name="task_id" value="{{task.id}}">
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary">Submit Comment</button>

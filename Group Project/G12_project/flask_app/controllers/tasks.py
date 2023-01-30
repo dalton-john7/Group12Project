@@ -2,6 +2,7 @@ from flask import Flask, render_template, session, redirect, request
 from flask_app import app
 from flask_app.models.user import User
 from flask_app.models.task import Task
+from flask_app.models.comment import Comment
 from flask import flash
 
 @app.route("/tasks/home")
@@ -19,7 +20,8 @@ def tasks_home():
 def task_detail(task_id):
     user = User.get_by_id(session["user_id"])
     task = Task.get_by_id(task_id)
-    return render_template("task_detail.html", user=user, task=task)
+    comments = Comment.get_all()
+    return render_template("task_detail.html", user=user, task=task, comments=comments)
 
 
 @app.route("/task/create")
