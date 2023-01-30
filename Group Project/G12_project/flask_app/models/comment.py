@@ -1,6 +1,7 @@
 from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
+from flask_app.models import task
 from flask_bcrypt import Bcrypt
 import re
 
@@ -16,22 +17,38 @@ class Comment:
         self.tip = data['tip']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.task=None
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM comments;"
+        #leaving this query for now, but need to implement condition
+        query = "SELECT * FROM comments JOIN tasks ON comments.task_id = tasks.id;"
+        #possible query
+        #query = "SELECT * FROM comments JOIN tasks ON comments WHERE comments.task_id = %(task.id)s;"
         results = connectToMySQL(DB).query_db(query)
-        tasks = []
-
-        for task in results:
-            tasks.append(cls(task))
-            return tasks
+        comments = []
+        
+        for comment in results:
+            comment_obj = cls(comment)
+            comment_obj.task=task.Task(             
+                {
+                    
+                    "id":comment['task_id'],
+                    "taskname":comment['taskname'],
+                    "created_at":comment['tasks.created_at'],
+                    "updated_at":comment['tasks.updated_at'],
+                    "user_id":comment['tasks.user_id']
+                }
+            )
+            
+            comments.append(comment_obj)
+        return comments
 
     
 
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO comments (tip, task_id) VALUES(%(tip)s,%(task_id)s;"
+        query = "INSERT INTO comments (tip, task_id, user_id) VALUES(%(tip)s,%(task_id)s,%(user_id)s);"
         return connectToMySQL(DB).query_db(query,data)
 
 # need delete method

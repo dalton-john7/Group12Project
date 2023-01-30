@@ -9,7 +9,10 @@ from flask import flash
 @app.route('/comment/<int:task_id>', methods=['POST'])
 def comment_on_task(task_id):
     data = {
-        "tip": request.form['tip']
-    }
+        "tip": request.form['tip'],
+        "task_id": request.form['task_id'],
+        "user_id": request.form['user_id']
+        }
+            
     Comment.save(data)
     return redirect(f"/task/{task_id}")
