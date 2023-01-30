@@ -13,5 +13,3 @@ def comment_on_task(task_id):
     }
     Comment.save(data)
     return redirect(f"/task/{task_id}")
-
-    # need delete route
