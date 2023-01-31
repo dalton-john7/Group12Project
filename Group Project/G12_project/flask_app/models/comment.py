@@ -2,6 +2,7 @@ from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_app.models import task
+from flask_app.models import user
 from flask_bcrypt import Bcrypt
 import re
 
@@ -44,8 +45,30 @@ class Comment:
             comments.append(comment_obj)
         return comments
 
-    
+    @classmethod
+    def get_comments_for_task(cls, task_id):
+        data = {
+            "id": task_id
+        }
+        query = "select firstname, lastname, tip, user_id from comments join users on comments.user_id = users.id where task_id = %(id)s;"
+        results = connectToMySQL(DB).query_db(query)
+        comments = []
 
+        for comment in results:
+            task_obj = cls(comment)
+            task_obj.task = task.Task(
+                {
+                    "id":comment['user_id'],
+                    "tip":comment['tip'],
+                    "firstname":comment['firstname'],
+                    "lastname":comment['lastname']
+                }
+            )
+
+            comments.append(task_obj)
+        return comments
+
+        return 
     @classmethod
     def save(cls, data):
         query = "INSERT INTO comments (tip, task_id, user_id) VALUES(%(tip)s,%(task_id)s,%(user_id)s);"

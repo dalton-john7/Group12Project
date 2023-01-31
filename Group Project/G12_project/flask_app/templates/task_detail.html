@@ -50,12 +50,12 @@
                     <tbody>
                         {% for comments in comments: %}
                             <tr>
-                                <!-- still need to worko on this part, not pulling all coments yet -->
-                                <td>{{task.comments.tip}}</td>
-                                <td>{{task.comments.user_id}}</td>
+                                <!-- still need to worko on this part, not pulling all comments yet -->
+                                <td>{{comments.tip}}</td>
+                                <td>{{comments.firstname}} {{comments.lastname}}</td>
                     <td>delete button pending</td>
                                 <!-- <td>
-                                Need to remove this block temporarily to avvoid error- list object has no user attribute**
+                                Need to investigate delete route**
                         {% if comments.user_id == user.id %}
                                     <a href="/comment/delete/{{comments.id}}">Delete</a>
                                     {% endif %}
