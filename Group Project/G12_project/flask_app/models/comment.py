@@ -18,55 +18,52 @@ class Comment:
         self.tip = data['tip']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.user=None
         self.task=None
 
     @classmethod
-    def get_all(cls):
-        #leaving this query for now, but need to implement condition
-        query = "SELECT * FROM comments JOIN tasks ON comments.task_id = tasks.id;"
-        #possible query
-        #query = "SELECT * FROM comments JOIN tasks ON comments WHERE comments.task_id = %(task.id)s;"
-        results = connectToMySQL(DB).query_db(query)
+    def get_all(cls, data):
+        query = "SELECT * FROM tasks LEFT JOIN comments ON comments.task_id = tasks.id WHERE comments.task_id = %(id)s;"
+        results = connectToMySQL(DB).query_db(query, data)
+        print(results)
         comments = []
-        
         for comment in results:
-            comment_obj = cls(comment)
-            comment_obj.task=task.Task(             
-                {
-                    
-                    "id":comment['task_id'],
-                    "taskname":comment['taskname'],
-                    "created_at":comment['tasks.created_at'],
-                    "updated_at":comment['tasks.updated_at'],
-                    "user_id":comment['tasks.user_id']
+            comment_data = cls(comment)
+            comment_data.task= task.Task(
+                {   
+                    'id':comment["task_id"],
+                    'tip':comment["tip"],
+                    'taskname':comment["taskname"],
+                    "created_at": comment["created_at"],
+                    "updated_at": comment["updated_at"]
                 }
             )
-            
-            comments.append(comment_obj)
+            comments.append(comment_data)
+            #print(comments)
         return comments
+#Commenting this method for now - will be working on the above
+    # @classmethod
+    # def get_comments_for_task(cls, task_id):
+    #     data = {
+    #         "id": task_id
+    #     }
+    #     query = "select firstname, lastname, tip, user_id from comments join users on comments.user_id = users.id where comments.task_id = %(id)s;"
+    #     results = connectToMySQL(DB).query_db(query)
+    #     comments = []
 
-    @classmethod
-    def get_comments_for_task(cls, task_id):
-        data = {
-            "id": task_id
-        }
-        query = "select firstname, lastname, tip, user_id from comments join users on comments.user_id = users.id where task_id = %(id)s;"
-        results = connectToMySQL(DB).query_db(query)
-        comments = []
+    #     for comment in results:
+    #         task_obj = cls(comment)
+    #         task_obj.task = task.Task(
+    #             {
+    #                 "id":comment['user_id'],
+    #                 "tip":comment['tip'],
+    #                 "firstname":comment['firstname'],
+    #                 "lastname":comment['lastname']
+    #             }
+    #         )
 
-        for comment in results:
-            task_obj = cls(comment)
-            task_obj.task = task.Task(
-                {
-                    "id":comment['user_id'],
-                    "tip":comment['tip'],
-                    "firstname":comment['firstname'],
-                    "lastname":comment['lastname']
-                }
-            )
-
-            comments.append(task_obj)
-        return comments
+    #         comments.append(task_obj)
+    #     return comments
 
         return 
     @classmethod

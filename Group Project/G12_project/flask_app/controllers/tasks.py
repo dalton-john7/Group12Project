@@ -21,7 +21,10 @@ def tasks_home():
 def task_detail(task_id,):
     user = User.get_by_id(session["user_id"])
     task = Task.get_by_id(task_id)
-    comments = Comment.get_comments_for_task(task_id)
+    data = {
+        'id': task_id
+    }
+    comments = Comment.get_all(data)
     return render_template("task_detail.html", user=user, task=task, comments=comments)
 
 

@@ -48,19 +48,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for comments in comments: %}
+                        {% for comment in comments %}
                             <tr>
-                                <!-- still need to worko on this part, not pulling all comments yet -->
-                                <td>{{comments.tip}}</td>
-                                <td>{{comments.firstname}} {{comments.lastname}}</td>
-                    <td>delete button pending</td>
-                                <!-- <td>
-                                Need to investigate delete route**
-                        {% if comments.user_id == user.id %}
-                                    <a href="/comment/delete/{{comments.id}}">Delete</a>
-                                    {% endif %}
-                                </td> -->
-                                <!-- ***************uncomment after delete method is implemented -->
+                                <td>{{comment.tip}}</td>
+                                <td>{{comment.user.username}}</td>
+                                <td>pending</td>
                             </tr>
                         {% endfor %}
                     </tbody>
