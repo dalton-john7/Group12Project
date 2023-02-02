@@ -79,3 +79,11 @@ class Comment:
         return connectToMySQL(DB).query_db(query,data)
 
 # need delete method
+    @classmethod
+    def delete_comment_by_id(cls, comment_id):
+        data = {
+            "id": comment_id
+        }
+        query = "DELETE FROM comments WHERE ID = %(id)s;"
+        connectToMySQL(DB).query_db(query, data)
+        return comment_id

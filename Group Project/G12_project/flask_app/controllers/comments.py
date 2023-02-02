@@ -17,4 +17,7 @@ def comment_on_task(task_id):
     Comment.save(data)
     return redirect(f"/task/{task_id}")
 
-    
+@app.route("/comment/delete/<int:comment_id>")
+def delete_by_comment_id(comment_id):
+    Comment.delete_comment_by_id(comment_id)
+    return redirect("/tasks/home")

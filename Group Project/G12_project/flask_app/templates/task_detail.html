@@ -52,7 +52,9 @@
                             <tr>
                                 <td>{{comment.tip}}</td>
                                 <td>{{comment.user.username}}</td>
-                                <td>pending</td>
+                                <td>{% if comment.user.username == user.username %}
+                                    <a href="/comment/delete/{{comment.id}}">Delete</a>
+                                    {% endif %}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
