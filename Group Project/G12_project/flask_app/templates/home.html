@@ -9,48 +9,50 @@
     
 </head>
 <body style="background-color: #eeeeee;">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="w-75 p-3">
-                <h1>Welcome,  {{user.username}}</h1>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <button style="margin-left: 10px; margin-top: 15px;" type="button" class="btn btn-primary"><a href="/task/create" style="color:#ffffff;">Add Task</a></button>
-                <button style="margin-left: 10px;  margin-top: 15px;" type="button" class="btn btn-primary"><a href="/logout" style="color:#ffffff;">Log Out</a></button>
-            </div>
-        </div>
-    </div>
-    <table>
+    <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <tr>
-                    <th>Task</th>
-                </tr>
+                <div class="w-75 p-3">
+                    <h1>Welcome,  {{user.username}}</h1>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <button style="margin-left: 10px; margin-top: 15px;" type="button" class="btn btn-primary"><a href="/task/create" style="color:#ffffff;">Add Task</a></button>
+                    <button style="margin-left: 10px;  margin-top: 15px;" type="button" class="btn btn-primary"><a href="/logout" style="color:#ffffff;">Log Out</a></button>
+                </div>
             </div>
         </div>
-        {% for task in task: %}
+        <table>
+            <div class="row">
+                <div class="col-md-8">
+                    <tr>
+                        <th>Task</th>
+                    </tr>
+                </div>
+            </div>
+            {% for task in task: %}
+            <div class="row">
+                <div class="col-8-md">
+                    <tr>
+                        <td>
+                            <a href="/task/{{task.id}}">{{task.taskname}}</a> added by {{task.user.username}}
+                        </td>
+                        <td>
+                            {% if task.user.id == user.id %}
+                                <a href="/task/edit/{{task.id}}">Edit</a>
+                                <a href="/task/delete/{{task.id}}">Delete</a>
+                                {% endif %}
+                        </td>
+                    </tr>
+                </div>
+            </div>
+            {% endfor %}
+        </table>
         <div class="row">
-            <div class="col-8-md">
-                <tr>
-                    <td>
-                        <a href="/task/{{task.id}}">{{task.taskname}}</a> added by {{task.user.username}}
-                    </td>
-                    <td>
-                        {% if task.user.id == user.id %}
-                            <a href="/task/edit/{{task.id}}">Edit</a>
-                            <a href="/task/delete/{{task.id}}">Delete</a>
-                            {% endif %}
-                    </td>
-                </tr>
-            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-8"></div>
+            <div class="col-md-4"></div>
         </div>
-        {% endfor %}
-    </table>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-8"></div>
-        <div class="col-md-4"></div>
     </div>
 </body>
