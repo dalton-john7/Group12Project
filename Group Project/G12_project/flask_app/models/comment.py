@@ -29,17 +29,23 @@ class Comment:
         comments = []
         for comment in results:
             comment_data = cls(comment)
-            comment_data.task= task.Task(
+            comment_data.task= task.Task
+            comment_data.user = user.User(
                 {   
                     'id':comment["task_id"],
                     'tip':comment["tip"],
                     'username': comment["username"],
+                    'firstname':comment["firstname"],
+                    'lastname':comment["lastname"],
+                    'email':comment["email"],
+                    'password':comment["password"],
                     'taskname':comment["taskname"],
                     "created_at": comment["created_at"],
                     "updated_at": comment["updated_at"]
                 }
             )
-            print(results)
+            
+            print(comment["username"])
             comments.append(comment_data)
         return comments
 #Commenting this method for now - will be working on the above

@@ -51,7 +51,7 @@
                         {% for comment in comments %}
                             <tr>
                                 <td>{{comment.tip}}</td>
-                                <td>{{comment.username}}</td>
+                                <td>{{comment.user.username}}</td>
                                 <td>pending</td>
                             </tr>
                         {% endfor %}
